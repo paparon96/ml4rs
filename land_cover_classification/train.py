@@ -53,3 +53,23 @@ for i, label in enumerate(label_names):
 plt.savefig('./images/landcover-examples.jpg', dpi=300)
 plt.tight_layout()
 plt.show()
+
+
+# Displaying RGB channels of a sample image
+label = label_names[3]
+path = os.path.join(data_dir, label, os.listdir(os.path.join(data_dir, label))[0])
+img = Image.open(path).convert("RGB")
+channels = img.split()
+titles = ["Original", "Red", "Green", "Blue"]
+cmaps = [None, "Reds", "Greens", "Blues"]
+
+plt.figure(figsize=(10, 6))
+for i in range(4):
+    plt.subplot(1, 4, i + 1)
+    plt.imshow(img if i == 0 else channels[i - 1], cmap=cmaps[i])
+    plt.title(titles[i])
+    plt.axis('off')
+
+plt.tight_layout()
+plt.savefig('./images/landcover-rgb.jpg', dpi=300)
+plt.show()
