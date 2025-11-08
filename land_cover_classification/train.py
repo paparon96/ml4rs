@@ -21,9 +21,9 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
-# from torchvision import transforms
-# import torchvision.transforms.functional as TF
-# from torchvision.models import resnet18, ResNet18_Weights
+from torchvision import transforms
+import torchvision.transforms.functional as TF
+from torchvision.models import resnet18, ResNet18_Weights
 
 from tqdm import tqdm
 
