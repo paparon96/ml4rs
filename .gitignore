@@ -5,3 +5,6 @@
 data/
 images/
 .DS_Store
+
+# saved models
+best_model.pt
