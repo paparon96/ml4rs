@@ -27,6 +27,8 @@ from torchvision.models import resnet18, ResNet18_Weights
 
 from tqdm import tqdm
 
+# Configuration parameters
+splits = [0.7, 0.15, 0.15]  # train, val, test set size
 # Ensuring reproducibility
 seed = 42
 random.seed(seed)
@@ -73,3 +75,25 @@ for i in range(4):
 plt.tight_layout()
 plt.savefig('./images/landcover-rgb.jpg', dpi=300)
 plt.show()
+
+
+# Data splitting
+
+# this dictionary creates an id for each label
+label2idx = {label: i for i, label in enumerate(label_names)}
+
+# we store the filenames and labels in lists
+files, targets = [], []
+for label in label_names:
+    label_files = glob(os.path.join(data_dir, label, "*.jpg"))
+    files += label_files
+    targets += [label2idx[label]] * len(label_files)
+
+# we split the lists into training, validation, and test
+train_files, temp_files, train_labels, temp_labels = train_test_split(
+    files, targets, train_size=splits[0], stratify=targets, random_state=seed)
+
+val_size = splits[1] / (splits[1] + splits[2])  # proportion of val in temp
+val_files, test_files, val_labels, test_labels = train_test_split(
+    temp_files, temp_labels, train_size=val_size,
+    stratify=temp_labels, random_state=seed)
